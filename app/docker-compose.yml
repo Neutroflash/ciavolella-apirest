@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:euro
+    container_name: postgres-container
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+
+  backend:
+    image: backend
+    container_name: backend-container
+    ports:
+      - "3001:3000"
+    depends_on:
+      - postgres
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
